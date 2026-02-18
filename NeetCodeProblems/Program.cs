@@ -6,8 +6,12 @@
         {
             Console.WriteLine("Hello, World!");
             Solution sol = new Solution();
-            string s= "a good   example";
-            Console.WriteLine(sol.ReverseWords(s));
+            int[] nums = new int[] { 1, 7, 3, 6, 5, 6 };
+            for(int i = 0; i < nums.Length; i++)
+            {
+                Console.WriteLine($"nums[{i}]: {nums[i]}");
+            }
+            Console.WriteLine(sol.PivotIndex(nums));
         }
     }
     public class Solution
@@ -130,6 +134,90 @@
                 rightProduct *= nums[i];
             }
             return result;
+        }
+        public bool IncreasingTriplet(int[] nums)
+        {
+            int first = int.MaxValue;
+            int second = int.MaxValue;
+
+            foreach (int n in nums)
+            {
+                if (n <= first)
+                    first = n;
+                else if (n <= second)
+                    second = n;
+                else
+                    return true; // found third number
+            }
+
+            return false;
+        }
+        public int Compress(char[] chars)
+        {
+            int []n = new int[chars.Length];
+            for(int i = 0; i < chars.Length; i++)
+            {
+                n[chars[i] - 'a']++;
+            }
+            string[]result = new string[chars.Length];
+            for(int i = 0; i < chars.Length; i++)
+            {
+                if (n[chars[i] - 'a'] == 1)
+                {
+                    result.Append(chars[i].ToString());
+
+                }
+                else if (n[chars[i] - 'a'] > 1)
+                {
+                    result.Append(chars[i].ToString());
+                    result.Append(n[chars[i]-'a'].ToString());
+                    n[chars[i] - 'a'] = 0;
+                }
+                else continue;
+            }
+
+            return result.Length;
+        }
+        public int LargestAltitude(int[] gain)
+        {
+            int[] altitudes = new int[gain.Length + 1];
+            altitudes[0] = 0;
+            int maxAltitude = 0;
+            for(int i = 0; i < gain.Length; i++)
+            {
+                altitudes[i + 1] = altitudes[i]+gain[i];
+                maxAltitude = Math.Max(maxAltitude, altitudes[i + 1]);
+            }
+            return maxAltitude;
+        }
+        public int PivotIndex(int[] nums)
+        {
+            int totalSum = nums.Sum();
+            int leftSum = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (leftSum == totalSum - leftSum - nums[i])
+                    return i;
+                leftSum += nums[i];
+            }
+            return -1;
+        }
+        public string RemoveStars(string s)
+        {
+            Stack<char> stack = new Stack<char>();
+            foreach (char c in s)
+            {
+              if(c!='*')
+                {
+                    stack.Push(c);
+                }
+                else if(stack.Count > 0)
+                {
+                    stack.Pop();
+                }
+            }
+            return new string(stack.Reverse().ToArray());
+
         }
     }
 }
