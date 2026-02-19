@@ -1,4 +1,6 @@
-﻿namespace NeetCodeProblems
+﻿using System.Numerics;
+
+namespace NeetCodeProblems
 {
     internal class Program
     {
@@ -218,6 +220,51 @@
             }
             return new string(stack.Reverse().ToArray());
 
+        }
+        public int[] AsteroidCollision(int[] asteroids)
+        {
+            Stack<int> stack = new Stack<int>();
+            foreach (int asteroid in asteroids)
+            {
+                while (stack.Count > 0 && asteroid < 0 && stack.Peek() > 0)
+                {
+                    int top = stack.Peek();
+                    if (top < -asteroid)
+                    {
+                        stack.Pop();
+                    }
+                    else if (top == -asteroid)
+                    {
+                        stack.Pop();
+                        break;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (stack.Count == 0 || asteroid > 0 || stack.Peek() < 0)
+                {
+                    stack.Push(asteroid);
+                }
+            }
+            return stack.Reverse().ToArray();
+
+        }
+        public int[] PlusOne(int[] digits)
+        {
+            for (int i = digits.Length - 1; i >= 0; i--)
+            {
+                if (digits[i] < 9)
+                {
+                    digits[i]++;
+                    return digits;
+                }
+                digits[i] = 0;
+            }
+            int[] newDigits = new int[digits.Length + 1];
+            newDigits[0] = 1;
+            return newDigits;
         }
     }
 }
