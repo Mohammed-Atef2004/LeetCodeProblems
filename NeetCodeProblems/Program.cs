@@ -266,5 +266,43 @@ namespace NeetCodeProblems
             newDigits[0] = 1;
             return newDigits;
         }
+        public void MoveZeroes(int[] nums)
+        {
+            int count = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] == 0)
+                {
+                    count++;
+                }
+            }
+            int index = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] != 0)
+                {
+                    nums[index++] = nums[i];
+                }
+            }
+            for (int i = index; i < nums.Length; i++)
+            {
+                nums[i] = 0;
+
+            }
+        }
+        public bool IsSubsequence(string s, string t)
+        {
+            int sIndex = 0, tIndex = 0;
+            while (sIndex < s.Length && tIndex < t.Length)
+            {
+                if (s[sIndex] == t[tIndex])
+                {
+                    sIndex++;
+                }
+                tIndex++;
+            }
+            return sIndex == s.Length;
+
+        }
     }
 }
