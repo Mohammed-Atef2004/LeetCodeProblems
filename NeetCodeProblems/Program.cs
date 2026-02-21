@@ -304,5 +304,57 @@ namespace NeetCodeProblems
             return sIndex == s.Length;
 
         }
+        public int MaxOperations(int[] nums, int k)
+        {
+            int left = 0, right = nums.Length - 1;
+            int count = 0;
+            Array.Sort(nums);
+            while (left < right)
+            {
+                int sum = nums[left] + nums[right];
+                if (sum == k)
+                {
+                    count++;
+                    left++;
+                    right--;
+                }
+                else if (sum < k)
+                {
+                    left++;
+                }
+                else
+                {
+                    right--;
+                }
+            }
+            return count;
+
+        }
+        public bool ValidParenthes(string s)
+        {
+            Stack<char> stack = new Stack<char>();
+            Dictionary<char, char> pairs = new Dictionary<char, char>
+            {
+                { '(', ')' },
+                { '{', '}' },
+                { '[', ']' }
+            };
+            foreach (char c in s)
+            {
+                if (pairs.ContainsKey(c))
+                {
+                    stack.Push(c);
+                }
+                else if (pairs.ContainsValue(c))
+                {
+                    if (stack.Count == 0 || pairs[stack.Pop()] != c)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return stack.Count == 0;
+
+        }
     }
 }
