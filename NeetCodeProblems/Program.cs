@@ -429,6 +429,20 @@ namespace NeetCodeProblems
             }
             return longestStreak;
         }
+        public int[] DailyTemperatures(int[] temperatures)
+        {
+            int[]sorted= temperatures;
+            Array.Sort(sorted);
+            int[] result = (int[])temperatures.Clone();
+            for (int i = 0; i < temperatures.Length; i++)
+            {
+                int firstindex=Array.FindIndex(sorted,x=>x==temperatures[i]);
+                int value = sorted[firstindex+1];
+                int index = Array.FindIndex(temperatures, x => x == value);
+                result[i] = index - i;
+            }
+            return result;
+        }
     }
 
 }
