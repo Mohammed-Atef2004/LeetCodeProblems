@@ -44,7 +44,15 @@ namespace NeetCodeProblems
             return stack.Min();
         }
     }
-
+   
+      public class listnode {
+          public int val;
+          public listnode next;
+          public listnode(int val=0, listnode next=null) {
+              this.val = val;
+              this.next = next;
+          }
+      }
     public class Solution
     {
         public string MergeAlternately(string word1, string word2)
@@ -463,6 +471,34 @@ namespace NeetCodeProblems
             }
 
             return maxArea;
+        }
+        public ListNode MergeTwoLists(ListNode list1, ListNode list2)
+        {
+            ListNode dummy = new ListNode();
+            ListNode current = dummy;
+            while (list1 != null && list2 != null)
+            {
+                if(list1.val <= list2.val)
+                {
+                    current.next = list1;
+                    list1 = list1.next;
+                }
+                else
+                {
+                    current.next = list2;
+                    list2 = list2.next;
+                }
+                current = current.next;
+            }
+            return current;
+        }
+        public int LengthOfLastWord(string s)
+        {
+            string[] words = s.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (words.Length == 0)
+                return 0;
+            return words[words.Length - 1].Length;
+
         }
     }
 
