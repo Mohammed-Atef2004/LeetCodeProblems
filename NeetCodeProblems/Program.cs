@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Security.Cryptography.X509Certificates;
 
 namespace NeetCodeProblems
 {
@@ -498,6 +499,22 @@ namespace NeetCodeProblems
             if (words.Length == 0)
                 return 0;
             return words[words.Length - 1].Length;
+
+        }
+        public bool ContainsDuplicate(int[] nums)
+        {
+            bool IsDuplicate = false;
+            HashSet<int> seen = new HashSet<int>();
+            for(int i = 0; i < nums.Length; i++)
+            {
+                if (seen.Contains(nums[i]))
+                {
+                    IsDuplicate = true;
+                    break;
+                }
+                seen.Add(nums[i]);
+            }
+            return IsDuplicate;
 
         }
     }
