@@ -517,6 +517,79 @@ namespace NeetCodeProblems
             return IsDuplicate;
 
         }
+        public bool IsAnagram(string s, string t)
+        {
+            bool isAnagram = true;
+            if (s.Length != t.Length)
+                return false;
+            string sortedS = String.Concat(s.OrderBy(c => c));
+            string sortedT = String.Concat(t.OrderBy(c => c));
+            for (int i = 0; i < sortedS.Length; i++)
+            {
+                if (sortedS[i] != sortedT[i])
+                {
+                    isAnagram = false;
+                    break;
+                }
+            }
+            return isAnagram;
+
+        }
+        public int[] TwoSum(int[] nums, int target)
+        {
+            Dictionary<int, int> numToIndex = new Dictionary<int, int>();
+            for(int i = 0; i < nums.Length; i++)
+            {
+                numToIndex[nums[i]] = i;
+            }
+            for(int i = 0; i < nums.Length; i++)
+            {
+                int complement = target - nums[i];
+                if(numToIndex.ContainsKey(complement) && numToIndex[complement] != i)
+                {
+                    return new int[] { i, numToIndex[complement] };
+                }
+            }
+            return new int[] { -1, -1 };
+
+        }
+        public IList<IList<string>> GroupAnagrams(string[] strs)
+        {
+            Dictionary<string, List<string>> anagramGroups = new Dictionary<string, List<string>>();
+            foreach (string str in strs)
+            {
+                char[] chars = str.ToCharArray();
+                Array.Sort(chars);
+                string sortedStr = new string(chars);
+                if(!anagramGroups.ContainsKey(sortedStr))
+                {
+                    anagramGroups[sortedStr] = new List<string>();
+                }
+                anagramGroups[sortedStr].Add(str);
+            }
+            IList<IList<string>> result = new List<IList<string>>();
+            foreach(var group in anagramGroups)
+            {
+                result.Add(group.Value);
+            }
+            return result;
+        }
+        public int[] TopKFrequent(int[] nums, int k)
+        {
+            Dictionary<int, int> frequencyMap = new Dictionary<int, int>();
+            for(int i = 0;i < nums.Length; i++)
+            {
+                if (!frequencyMap.ContainsKey(nums[i]))
+                {
+                    frequencyMap[nums[i]] = 0;
+                }
+                frequencyMap[nums[i]]++;
+            }
+            var sortedByFrequency = frequencyMap.OrderByDescending(x => x.Value).Take(k);
+            return sortedByFrequency.Select(x => x.Key).ToArray();
+            
+
+        }
     }
 
 }
