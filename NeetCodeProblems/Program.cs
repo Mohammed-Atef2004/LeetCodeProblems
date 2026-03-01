@@ -422,15 +422,15 @@ namespace NeetCodeProblems
         {
             int longestStreak = 0;
             HashSet<int> numSet = new HashSet<int>(nums);
-            foreach(var num in numSet)
+            foreach (int num in numSet)
             {
-                if (!numSet.Contains(num - 1))
+                if(!numSet.Contains(num-1))
                 {
-                    int currentNum = num;
+                    int current = num;
                     int currentStreak = 1;
-                    while(numSet.Contains(currentNum + 1))
+                    while (numSet.Contains(current))
                     {
-                        currentNum++;
+                        current++;
                         currentStreak++;
                     }
                     longestStreak = Math.Max(longestStreak, currentStreak);
@@ -588,6 +588,30 @@ namespace NeetCodeProblems
             var sortedByFrequency = frequencyMap.OrderByDescending(x => x.Value).Take(k);
             return sortedByFrequency.Select(x => x.Key).ToArray();
             
+
+        }
+        public bool CanConstruct(string ransomNote, string magazine)
+        {
+            string sortedRansom = String.Concat(ransomNote.OrderBy(c => c));
+            string sortedMagazine = String.Concat(magazine.OrderBy(c => c));
+            int ransomIndex = 0, magazineIndex = 0;
+            while (ransomIndex < sortedRansom.Length && magazineIndex < sortedMagazine.Length)
+            {
+                if (sortedRansom[ransomIndex] == sortedMagazine[magazineIndex])
+                {
+                    ransomIndex++;
+                    magazineIndex++;
+                }
+                else if (sortedRansom[ransomIndex] > sortedMagazine[magazineIndex])
+                {
+                    magazineIndex++;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return ransomIndex == sortedRansom.Length;
 
         }
     }
