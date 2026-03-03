@@ -675,6 +675,51 @@ namespace NeetCodeProblems
             }
             return true;
         }
+        public int SingleNumber(int[] nums)
+        {
+            
+            Dictionary<int, bool> frequencyMap = new Dictionary<int, bool>();
+            int value = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (!frequencyMap.ContainsKey(nums[i]))
+                {
+                    frequencyMap[nums[i]] = false;
+                }
+                else
+                {
+                    frequencyMap[nums[i]] = true;
+                    frequencyMap.Remove(nums[i]);
+                }
+                
+            }
+            return frequencyMap.Keys.FirstOrDefault();
+
+        }
+        public int[] SingleNumberII(int[] nums)
+        {
+            Dictionary<int, bool> frequencyMap = new Dictionary<int, bool>();
+            int value = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (!frequencyMap.ContainsKey(nums[i]))
+                {
+                    frequencyMap[nums[i]] = false;
+                }
+                else
+                {
+                    frequencyMap[nums[i]] = true;
+                    frequencyMap.Remove(nums[i]);
+                }
+
+            }
+            return frequencyMap.Keys.ToArray();
+        }
+        public int MajorityElement(int[] nums)
+        {
+            var x= nums.GroupBy(n => n).OrderByDescending(g => g.Count()).FirstOrDefault().ToArray();
+            return x[0];
+        }
     }
 
 }
