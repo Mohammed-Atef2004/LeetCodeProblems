@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Numerics;
+using System.Security;
 using System.Security.Cryptography.X509Certificates;
 
 namespace NeetCodeProblems
@@ -476,23 +477,18 @@ namespace NeetCodeProblems
         }
         public ListNode MergeTwoLists(ListNode list1, ListNode list2)
         {
-            ListNode dummy = new ListNode();
-            ListNode current = dummy;
-            while (list1 != null && list2 != null)
+            if (list1 == null) return list2;
+            if (list2 == null) return list1;
+            if (list1.val < list2.val)
             {
-                if(list1.val <= list2.val)
-                {
-                    current.next = list1;
-                    list1 = list1.next;
-                }
-                else
-                {
-                    current.next = list2;
-                    list2 = list2.next;
-                }
-                current = current.next;
+                list1.next = MergeTwoLists(list1.next, list2);
+                return list1;
             }
-            return current;
+            else
+            {
+                list2.next = MergeTwoLists(list1, list2.next);
+                return list2;
+            }
         }
         public int LengthOfLastWord(string s)
         {
@@ -720,6 +716,66 @@ namespace NeetCodeProblems
             var x= nums.GroupBy(n => n).OrderByDescending(g => g.Count()).FirstOrDefault().ToArray();
             return x[0];
         }
+        public IList<int> FindDisappearedNumbers(int[] nums)
+        {
+            Dictionary<int, bool> seen = new Dictionary<int, bool>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                seen[nums[i]] = true;
+            }
+            List<int> result = new List<int>();
+            for (int i = 1; i <= nums.Length; i++)
+            {
+                if (!seen.ContainsKey(i))
+                {
+                    result.Add(i);
+                }
+            }
+            return result;
+
+        }
+        public int[] NextGreaterElement(int[] nums1, int[] nums2)
+        {
+            int[]result= new int[nums1.Length];
+            for(int i = 0; i < nums1.Length; i++)
+            {
+                int indexInNums2 = Array.IndexOf(nums2, nums1[i]);
+                result[i] = -1;
+                for(int j = indexInNums2 + 1; j < nums2.Length; j++)
+                {
+                    if(nums2[j] > nums1[i])
+                    {
+                        result[i] = nums2[j];
+                        break;
+                    }
+                }
+            }
+            return result;
+
+        }
+        // Linked List Problems
+        public bool HasCycle(ListNode head)
+        {
+            //for(int i=0;i<100000;i++)
+            //{
+            //    if (head == null)
+            //        return false;
+            //    head = head.next;
+            //}
+            //return true;
+            if (head == null) return false;
+            ListNode slow = head;
+            ListNode fast = head;
+            while (fast != null && fast.next != null)
+            {
+                slow = slow.next;
+                fast = fast.next.next;
+                if (slow == fast)
+                    return true;
+            }
+            return false;
+        }
+
     }
 
 }
