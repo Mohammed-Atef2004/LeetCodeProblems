@@ -19,43 +19,8 @@ namespace NeetCodeProblems
             Console.WriteLine(sol.PivotIndex(nums));
         }
     }
-    public class MinStack
-    {
-        public Stack<int> stack;
-        public MinStack()
-        {
-            stack = new Stack<int>();
-        }
-
-        public void Push(int val)
-        {
-            stack.Push(val);
-        }
-
-        public void Pop()
-        {
-            stack.Pop();
-        }
-
-        public int Top()
-        {
-            return stack.Peek();
-        }
-
-        public int GetMin()
-        {
-            return stack.Min();
-        }
-    }
+  
    
-      public class listnode {
-          public int val;
-          public listnode next;
-          public listnode(int val=0, listnode next=null) {
-              this.val = val;
-              this.next = next;
-          }
-      }
     public class Solution
     {
         public string MergeAlternately(string word1, string word2)
