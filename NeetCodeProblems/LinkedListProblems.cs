@@ -69,5 +69,73 @@ namespace NeetCodeProblems
             }
             return false;
         }
+        /// <summary>
+        /// Note: Removes duplicates from a sorted linked list.
+        /// Due to the sorted nature, duplicates will be adjacent. The method iteratively skips over duplicate nodes.
+        /// </summary>
+        public ListNode DeleteDuplicates(ListNode head)
+        {
+            ListNode current = head;
+            while (current != null && current.next != null)
+            {
+                if(current.val == current.next.val)
+                {
+                    current.next = current.next.next; // Skip duplicate
+                }
+                else
+                {
+                    current = current.next; // Move to next distinct value
+                }
+            }
+            return head;
+        }
+        /// <summary>
+        ///Note: Finds the middle node of a linked list.
+        ///Determines the length of the list first, then calculates the middle index and traverses to that node.
+        /// </summary>
+        public ListNode MiddleNode(ListNode head)
+        {
+            int length = 0;
+            ListNode current = head;
+            while (current != null)
+            {
+                length++;
+                current = current.next;
+            }
+            if (length == 0) return null;// Edge case: empty list
+            int mid = length / 2;
+
+            while (mid > 0)
+            {
+                head = head.next;
+                mid--;
+            }
+            return head;
+
+        }
+        /// <summary>
+        ///Note: Checks if a linked list is a palindrome.
+        ///Due to the singly linked nature, it first stores values in a list, then uses two pointers to compare from both ends.
+        /// </summary>
+        public bool IsPalindrome(ListNode head)
+        {
+            List<int> values = new List<int>();
+            ListNode current = head;
+            while (current != null)
+            {
+                values.Add(current.val);
+                current = current.next;
+            }
+            int left = 0, right = values.Count - 1;
+            while (left < right)
+            {
+                if (values[left] != values[right])
+                    return false;
+                left++;
+                right--;
+            }
+            return true;
+
+        }
     }
 }
