@@ -99,5 +99,13 @@ namespace NeetCodeProblems
                 return 0;
             return words[words.Length - 1].Length;
         }
+        /// <summary>
+        ///Note: Checks if a binary string has at most one segment of '1's.
+        ///to determine if the string contains the substring "01", which would indicate multiple segments of '1's.
+        /// </summary>
+        public bool CheckOnesSegment(string s)
+        {
+            return !s.Contains("01");
+        }
     }
 }
