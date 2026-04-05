@@ -133,6 +133,113 @@ namespace NeetCodeProblems
 
             return stack.Count == 0;
         }
+        /// <summary>
+        /// Note: Evaluates the value of an arithmetic expression in Reverse Polish Notation (RPN).
+        /// Uses a Stack to store operands and applies operators as they are encountered, ensuring correct order of operations.
+        /// </summary>
+        /// <param name="tokens"></param>
+        /// <returns></returns>
+        public int EvalRPN(string[] tokens)
+        {
+            //edge case: if tokens has only one element, return that element as an integer
+            if (tokens.Length == 1)
+            {
+                return int.Parse(tokens[0]);
+            }
+            int result = 0;
+            Stack<int> stack = new Stack<int>();
+            foreach (string token in tokens)
+            {
+                if (int.TryParse(token, out int num))
+                {
+                    stack.Push(num);
+                }
+                else
+                {
+                    int b = stack.Pop();
+                    int a = stack.Pop();
+                    switch (token)
+                    {
+                        case "+":
+                            result = a + b;
+                            break;
+                        case "-":
+                            result = a - b;
+                            break;
+                        case "*":
+                            result = a * b;
+                            break;
+                        case "/":
+                            result = a / b; // Note: Integer division truncates towards zero
+                            break;
+                    }
+                    stack.Push(result);
+                }
+            }
+            return result;
+        }
+        /// <summary>
+        /// Note: Determines the number of days until a warmer temperature for each day in the input array.
+        /// Uses a Stack to keep track of indices of temperatures, allowing for efficient calculation of days until a warmer temperature is found.
+        /// </summary>
+        /// <param name="temperatures"></param>
+        /// <returns></returns>
+        public int[] DailyTemperatures(int[] temperatures)
+        {
+            int[] result = new int[temperatures.Length];
+            Stack<int> stack = new Stack<int>(); // Stack to hold indices of temperatures
+            for (int i = 0; i < temperatures.Length; i++)
+            {
+                while (stack.Count > 0 && temperatures[i] > temperatures[stack.Peek()])
+                {
+                    int index = stack.Pop();
+                    result[index] = i - index; // Calculate days until a warmer temperature
+                }
+                stack.Push(i); // Push current index onto the stack
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Note: Simplifies a given Unix-style file path by resolving "." and ".." components.
+        /// Uses a Stack to manage directory names, allowing for efficient handling of path components and construction of the simplified path.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public string SimplifyPath(string path)
+        {
+            Stack<string> stack = new Stack<string>();
+            string[] parts = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
+            foreach (string part in parts)
+            {
+                if (part == ".")
+                {
+                    continue; // Current directory, skip
+                }
+                else if (part == "..")
+                {
+                    if (stack.Count > 0)
+                    {
+                        stack.Pop(); // Move up to parent directory
+                    }
+                }
+                else if (part == "/" || part == "//")
+                {
+                    continue; // Skip empty parts resulting from multiple slashes
+                }
+                else
+                {
+                    stack.Push(part); // Valid directory name, push onto stack
+                }
+            }
+            path = "";
+            for (int i = stack.Count - 1; i >= 0; i--)
+            {
+                string dir = stack.ElementAt(i);
+                path += "/" + dir; // Build the simplified path
+            }
+            return path == "" ? "/" : path; // Return root if path is empty
+        }
     }
     /// <summary>
     /// Note: Implementation for the stack using two queues 
