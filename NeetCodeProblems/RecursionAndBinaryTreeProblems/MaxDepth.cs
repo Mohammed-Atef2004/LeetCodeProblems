@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeetCodeProblems.RecursionAndBinaryTreeProblems
 {
-    public partial class RecursionAndBinaryTreeProblems
+    public partial class IsSubtree
     {
         public int MaxDepth(TreeNode root)
         {
